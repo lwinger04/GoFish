@@ -17,25 +17,26 @@ int main(){
     Player p1("Bob");
     Player p2("Peter");
 
-    cout << p1.getName() << endl;
-    cout << p2.getName() << endl;
+    cout << "Player 1 is: " << p1.getName() << endl;
+    cout << "Player 2 is: " << p2.getName() << endl;
     for(int i = 0; i<7; i++){
         p1.addCard(d.dealCard());
         p2.addCard(d.dealCard());
     }
-    cout << p1.getName() << " hand: "<< p1.showHand() << endl;
-    cout << p2.getName() << " hand: "<< p2.showHand() << endl;
+    cout << p1.getName() << "'s hand: "<< p1.showHand() << endl;
+    cout << p2.getName() << "'s hand: "<< p2.showHand() << endl;
     while ((p1.getHandSize() != 0)&&(p1.checkHandForBook(c1, c2))) {
         p1.bookCards(c1, c2);
     }
-    cout << p1.getName() << " books: " << p1.showBooks() << endl;
+    cout << p1.getName() << "'s books: " << p1.showBooks() << endl;
     while ((p2.getHandSize() != 0)&&(p2.checkHandForBook(c1, c2))) {
         p2.bookCards(c1, c2);
     }
-    cout << p2.getName() << " books: " << p2.showBooks() << endl;
+    cout << p2.getName() << "'s books: " << p2.showBooks() << endl;
 
     while(!(p1.getHandSize() == 0 && p2.getHandSize() == 0 && d.size() == 0)) {
-        if(p1.getHandSize()!=0) {
+        cout << "\n" << p1.getName() << "'s turn" << endl;
+		if(p1.getHandSize()!=0) {
             c1 = p1.chooseCardFromHand();
             cout << p1.getName() << ": Do you have a " << c1.rankString(c1.getRank()) << "?" << endl;
             if (p2.cardInHand(c1)) {
@@ -45,28 +46,33 @@ int main(){
                 while ((p1.getHandSize() != 0)&&(p1.checkHandForBook(c1, c2))) {
                     p1.bookCards(c1, c2);
                 }
-                cout << p1.getName() << " books: " << p1.showBooks() << endl;
+                cout << p1.getName() << "'s books: " << p1.showBooks() << endl;
+				cout << p1.getName() << "'s hand: " << p1.showHand() << endl;
             } else {
                 cout << p2.getName() << ": No" << endl;
                 p1.addCard((d.dealCard()));
-                cout << p1.getName() << " hand: " << p1.showHand() << endl;
+                cout << p1.getName() << "'s hand: " << p1.showHand() << endl;
                 while ((p1.getHandSize() != 0)&&(p1.checkHandForBook(c1, c2))) {
                     p1.bookCards(c1, c2);
                 }
             }
+            cout << p2.getName() << "'s hand: " << p2.showHand() << endl;
         }
         else {
             if (d.size() != 0) {
                 p1.addCard((d.dealCard()));
-                cout << p1.getName() << " hand: " << p1.showHand() << endl;
-                cout << p1.getName() << " books: " << p1.showBooks() << endl;
+                cout << p1.getName() << "'s hand: " << p1.showHand() << endl;
+                cout << p1.getName() << "'s books: " << p1.showBooks() << endl;
             }
         }
+   
+		if(!(p1.getHandSize() == 0 && p2.getHandSize() == 0 && d.size() == 0)) {
+	        cout << "\n" << p2.getName() << "'s turn" << endl;
+		}
 
-        cout << p2.getName() << " hand: " << p2.showHand() << endl;
-        if(p2.getHandSize()!=0) {
+		if(p2.getHandSize()!=0) {
             c1 = p2.chooseCardFromHand();
-            cout << p2.getName() << ": Do you have " << c1.rankString(c1.getRank()) << "?" << endl;
+            cout << p2.getName() << ": Do you have a " << c1.rankString(c1.getRank()) << "?" << endl;
             if (p1.cardInHand(c1)) {
                 cout << p1.getName() << ": Yes" << endl;
                 c2 = p1.removeCardFromHand(c1);
@@ -74,25 +80,36 @@ int main(){
                 while ((p2.getHandSize() != 0)&&(p2.checkHandForBook(c1, c2))) {
                     p2.bookCards(c1, c2);
                 }
-                cout << p2.getName() << " books: " << p2.showBooks() << endl;
+                cout << p2.getName() << "'s books: " << p2.showBooks() << endl;
+				cout << p2.getName() << "'s hand: " << p2.showHand() << endl;
             } else {
                 cout << p1.getName() << ": No" << endl;
                 p2.addCard((d.dealCard()));
-                cout << p2.getName() << " hand: " << p2.showHand() << endl;
+                cout << p2.getName() << "'s hand: " << p2.showHand() << endl;
                 while ((p2.getHandSize() != 0)&&(p2.checkHandForBook(c1, c2))) {
                     p2.bookCards(c1, c2);
                 }
             }
-            cout << p1.getName() << " hand: " << p1.showHand() << endl;
+            cout << p1.getName() << "'s hand: " << p1.showHand() << endl;
         }
         else{
             if (d.size() != 0) {
                 p2.addCard((d.dealCard()));
-                cout << p2.getName() << " hand: " << p2.showHand() << endl;
-                cout << p2.getName() << " books: " << p2.showBooks() << endl;
+                cout << p2.getName() << "'s hand: " << p2.showHand() << endl;
+                cout << p2.getName() << "'s books: " << p2.showBooks() << endl;
             }
         }
     }
+	cout << "\n" << endl;
+	cout << p1.getName() << "'s books: " << p1.showBooks() << endl;
+	cout << p2.getName() << "'s books: " << p2.showBooks() << endl;
+	if (p1.getBookSize() > p2.getBookSize()) {
+		cout << p1.getName() << " wins!" << endl;
+	} else if (p2.getBookSize() > p1.getBookSize()) {
+		cout << p2.getName() << " wins!" << endl;
+	} else {
+		cout << "It's a draw!" << endl;
+	}	
 
     return(EXIT_SUCCESS);
 }
